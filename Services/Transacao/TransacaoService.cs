@@ -73,7 +73,7 @@ namespace api.gestaopessoal.Services.Transacao
                 transacao.TipoPagamento = tiposPagamento.FirstOrDefault(t => t.Id == transacao.TipoPagamentoId);
             }
 
-            return transacoes.OrderByDescending(order => order.DataModificacao).ToList();
+            return transacoes.OrderByDescending(order => order.DataCriacao).ToList();
         }
 
         public void Remove(string id)
