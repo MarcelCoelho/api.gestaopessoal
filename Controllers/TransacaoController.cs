@@ -67,7 +67,17 @@ namespace api.gestaopessoal.Controllers
             if (transacaoEncontrado == null)
                 return NotFound($"Transacao com Id = {id} não encontrado.");
 
+            Transacao.DataCriacao = transacaoEncontrado.DataCriacao;
+            Transacao.DataModificacao = DateTime.Now;
+
             _transacaoService.Update(id, Transacao);
+            return NoContent();
+        }
+
+        [HttpPut]
+        public ActionResult Put()
+        {
+            _transacaoService.UpdateAll();
             return NoContent();
         }
 

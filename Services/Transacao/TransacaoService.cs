@@ -73,7 +73,7 @@ namespace api.gestaopessoal.Services.Transacao
                 transacao.TipoPagamento = tiposPagamento.FirstOrDefault(t => t.Id == transacao.TipoPagamentoId);
             }
 
-            return transacoes.OrderByDescending(order => order.DataCriacao).ToList();
+            return transacoes.OrderByDescending(order => order.DataModificacao).ToList();
         }
 
         public void Remove(string id)
@@ -81,9 +81,25 @@ namespace api.gestaopessoal.Services.Transacao
             _transacaoCollection.DeleteOne(tp => tp.Id == id);
         }
 
-        public void Update(string id, Transacao tipoPagamento)
+        public void Update(string id, Transacao transacao)
         {
-            _transacaoCollection.ReplaceOne(tp => tp.Id == id, tipoPagamento);
+            _transacaoCollection.ReplaceOne(tp => tp.Id == id, transacao);
+        }
+
+        public void UpdateAll()
+        {
+            var tiposPagamento = _tipoPagamentoService.Get();
+            var faturas = _faturaService.Get();
+
+            var transacoes = _transacaoCollection.Find(tp => tp.UsuarioId.Equals("marcelfillipe@hotmail.com")).ToList();
+
+            foreach (var transacao in transacoes)
+            {
+                transacao.Fatura = faturas.FirstOrDefault(f => f.Id == transacao.FaturaId);
+                transacao.TipoPagamento = tiposPagamento.FirstOrDefault(t => t.Id == transacao.TipoPagamentoId);
+                transacao.UsuarioId = "39440678";
+                _transacaoCollection.ReplaceOne(tp => tp.Id == transacao.Id, transacao);
+            }           
         }
     }
 }

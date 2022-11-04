@@ -10,6 +10,8 @@
         Transacao Get(string id);        
         Transacao Create(Transacao usuario);
         void Update(string id, Transacao usuario);
+
+        void UpdateAll();
         void Remove(string id);
     }
 }
