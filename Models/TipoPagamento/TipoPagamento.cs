@@ -2,6 +2,7 @@
 
 namespace api.gestaopessoal.Models.TipoPagamento
 {
+    [Serializable]
     [BsonIgnoreExtraElements]
     public class TipoPagamento : Base
     {

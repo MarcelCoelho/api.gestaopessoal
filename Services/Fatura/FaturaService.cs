@@ -25,7 +25,7 @@ namespace api.gestaopessoal.Services.Fatura
 
         public List<Fatura> Get()
         {
-            return _faturaCollection.Find(tp => true).ToList();
+            return _faturaCollection.Find(tp => true).ToList().OrderByDescending(o=> o.Ordem).ToList();
         }
 
         public Fatura Get(string id)
@@ -38,9 +38,10 @@ namespace api.gestaopessoal.Services.Fatura
            _faturaCollection.DeleteOne(tp => tp.Id == id);
         }
 
-        public void Update(string id, Fatura Fatura)
+        public Fatura Update(string id, Fatura Fatura)
         {
             _faturaCollection.ReplaceOne(tp => tp.Id == id, Fatura);
+            return Fatura;
         }
     }
 }

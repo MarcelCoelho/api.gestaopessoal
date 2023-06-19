@@ -47,7 +47,7 @@ namespace api.gestaopessoal.Controllers
 
         // PUT api/<FaturaController>/5
         [HttpPut]
-        public ActionResult Put(Fatura Fatura)
+        public ActionResult<Fatura> Put(Fatura Fatura)
         {
             string id = Fatura.Id;
             var faturaEncontrada = _faturaService.Get(Fatura.Id);
@@ -55,7 +55,7 @@ namespace api.gestaopessoal.Controllers
                 return NotFound($"Fatura com Id = {Fatura.Id} não encontrada.");
 
             _faturaService.Update(id, Fatura);
-            return NoContent();
+            return CreatedAtAction(nameof(Get), new { id = Fatura.Id }, Fatura);
         }
 
         [HttpPut("Fechada/{id}/{fechada}")]

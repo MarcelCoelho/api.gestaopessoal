@@ -2,6 +2,7 @@
 
 namespace api.gestaopessoal.Models.Fatura
 {
+    [Serializable]
     [BsonIgnoreExtraElements]
     public class Fatura : Base
     {

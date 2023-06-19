@@ -1,9 +1,8 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
-using api.gestaopessoal.Models.Fatura;
-using api.gestaopessoal.Models.TipoPagamento;
 
 namespace api.gestaopessoal.Models.Transacao
 {
+    [Serializable]
     public class Transacao: Base
     {
         [BsonElement("data")]
@@ -45,6 +44,8 @@ namespace api.gestaopessoal.Models.Transacao
         [BsonIgnore]
         public Fatura.Fatura? Fatura { get; set; }
         [BsonIgnore]
-        public TipoPagamento.TipoPagamento? TipoPagamento { get; set; }
+        public TipoPagamento.TipoPagamento? TipoPagamento { get; set; }           
+        public bool Editando { get; set; }
+        public int RegistroId { get; set; }
     }
 }
