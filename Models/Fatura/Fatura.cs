@@ -1,4 +1,5 @@
-﻿using MongoDB.Bson.Serialization.Attributes;
+﻿using api.gestaopessoal.Models.Cartao;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace api.gestaopessoal.Models.Fatura
 {
@@ -23,5 +24,11 @@ namespace api.gestaopessoal.Models.Fatura
         public bool Fechada { get; set; }
         [BsonElement("atual")]
         public bool Atual { get; set; }
+
+        [BsonElement("cartaoId")]
+        public string CartaoId { get; set; } = string.Empty;
+        [BsonIgnore]
+        public Cartao.Cartao? Cartao { get; set; }
+
     }
 }

@@ -28,7 +28,7 @@ namespace api.gestaopessoal.Services.TipoPagamento
             return _tipoPagamentoCollection.Find(tp => true).ToList();
         }
 
-        public TipoPagamento Get(string id)
+        public TipoPagamento GetById(string id)
         {
             return _tipoPagamentoCollection.Find(tp => tp.Id == id).FirstOrDefault();
         }

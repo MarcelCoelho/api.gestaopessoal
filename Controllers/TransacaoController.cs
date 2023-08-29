@@ -34,11 +34,17 @@ namespace api.gestaopessoal.Controllers
 
 
         [HttpPost("TransacoesPorFaturas")]
-        public ActionResult<List<TotalFatura>> TransacoesPorFaturas(List<string> ids)
+        public ActionResult<List<TotalFatura>> TransacoesPorFaturas(List<string> usuarios)
         {
-            var transacoes = _transacaoService.TransacoesPorFaturas(ids);
-
-            return transacoes;
+            try
+            {
+                var transacoes = _transacaoService.TransacoesPorFaturas(usuarios);
+                return Ok(transacoes);
+            }
+            catch (Exception ex)
+            {
+                return NotFound(ex.Message);
+            }
         }
 
         [HttpPost("TransacoesPorFaturasNaoSelecionadas")]
@@ -49,10 +55,52 @@ namespace api.gestaopessoal.Controllers
             return transacoes;
         }
 
-        [HttpGet("totalPorFatura")]
-        public ActionResult<List<TotalFatura>> TotalPorFatura()
+        [HttpPost("totalPorFatura")]
+        public ActionResult<List<TotalFatura>> TotalPorFatura([FromBody] List<string> usuarios)
         {
-            return _transacaoService.TotalPorFatura();
+            try
+            {
+                var result = _transacaoService.TotalPorFatura(usuarios);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return NotFound(ex.Message);
+            }
+        }
+
+        [HttpPost("totalFaturaPorUsuario")]
+        public ActionResult<List<UsuarioFatura>> TotalFaturaPorUsuarios([FromBody] RequestTotalFatura request)
+        {
+            try
+            {
+                var result = _transacaoService.TotalFaturaPorUsuarios(request.ano, request.usuarios);
+                if (result != null && result.Any())
+                    return Ok(result);
+
+                return NotFound();
+            }
+            catch (Exception ex)
+            {
+                return NotFound(ex.Message);
+            }
+        }
+
+        [HttpPost("totalPorCategoria")]
+        public ActionResult<List<UsuarioFatura>> TotalPorCategoria([FromBody] RequestTotalCategoria request)
+        {
+            try
+            {
+                var result = _transacaoService.TotalTransacoesPorCategoria(request.cartaoId, request.anos, request.identificadoresFatura, request.usuario, request.verDependentes);
+                if (result != null && result.Any())
+                    return Ok(result);
+
+                return NotFound();
+            }
+            catch (Exception ex)
+            {
+                return NotFound(ex.Message);
+            }
         }
 
         // GET api/<TransacaoController>/5
@@ -104,21 +152,12 @@ namespace api.gestaopessoal.Controllers
         }
 
         [HttpPut]
-        public ActionResult Put()
+        public ActionResult Put(string obs1, string obs2)
         {
-            _transacaoService.UpdateAll();
+            _transacaoService.UpdateAll(obs1, obs2);
             return NoContent();
         }
-
-        //[HttpPut("novaColuna")]
-        //public ActionResult PutGeralNovaColuna()
-        //{
-        //    _transacaoService.UpdateAllNovaColuna();
-        //    return NoContent();
-        //}
-
-
-
+               
         // DELETE api/<TransacaoController>/5
         [HttpDelete("{id}")]
         public ActionResult<bool> Delete(string id)

@@ -6,6 +6,8 @@
         public string CollectionNameTipoPagamento { get; set; } = string.Empty;
         public string CollectionNameFatura { get; set; } = string.Empty;
         public string CollectionNameTransacao { get; set; } = string.Empty;
+        public string CollectionNameCategoria { get; set; } = string.Empty;
+        public string CollectionNameCartao { get; set; } = string.Empty;
         public string ConnectionString { get; set; } = string.Empty;
         public string DatabaseName { get; set; } = string.Empty;
     }

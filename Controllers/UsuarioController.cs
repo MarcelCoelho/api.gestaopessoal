@@ -69,13 +69,24 @@ namespace api.gestaopessoal.Controllers
             return Ok($"Usuario com Id = {id} removido.");
         }
 
-        [HttpPost("ValidarLogin")]
-        public ActionResult ValidarLogin(string login, string senha)
+        [HttpPost("Login")]
+        public ActionResult<Usuario> Login(string login, string senha)
         {
-            bool validacaoOK = _usuarioService.ValidarLogin(login, senha);
+            var usuario = _usuarioService.Login(login, senha);
 
-            if (validacaoOK)
-                return Ok($"Usuario {login} validado com sucesso.");
+            if (usuario != null)
+                return Ok(usuario);
+            else
+                return NotFound($"Usuario e Senha inválidos.");
+        }
+
+        [HttpGet("GetByLoginEmail")]
+        public ActionResult<Usuario> GetByLoginEmail(string valor)
+        {
+            var usuario = _usuarioService.GetByLoginEmail(valor);
+
+            if (usuario != null)
+                return Ok(usuario);
             else
                 return NotFound($"Usuario e Senha inválidos.");
         }

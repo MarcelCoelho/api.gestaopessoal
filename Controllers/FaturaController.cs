@@ -25,11 +25,22 @@ namespace api.gestaopessoal.Controllers
             return _faturaService.Get();
         }
 
+        [HttpGet("GetByCartao")]
+        public ActionResult<List<Fatura>> GetByCartao(string cartaoId)
+        {
+            var faturas = _faturaService.GetByCartao(cartaoId);
+
+            if (faturas == null || faturas.Count == 0)
+                return NotFound("Nao existem faturas cadastradas para o cartão informado.");
+
+            return faturas;
+        }
+
         // GET api/<FaturaController>/5
         [HttpGet("{id}")]
-        public ActionResult<Fatura> Get(string id)
+        public ActionResult<Fatura> GetById(string id)
         {
-            var fatura = _faturaService.Get(id);
+            var fatura = _faturaService.GetById(id);
 
             if (fatura == null)
                 return NotFound($"Fatura com Id = {id} não encontrada.");
@@ -50,7 +61,7 @@ namespace api.gestaopessoal.Controllers
         public ActionResult<Fatura> Put(Fatura Fatura)
         {
             string id = Fatura.Id;
-            var faturaEncontrada = _faturaService.Get(Fatura.Id);
+            var faturaEncontrada = _faturaService.GetById(Fatura.Id);
             if (faturaEncontrada == null)
                 return NotFound($"Fatura com Id = {Fatura.Id} não encontrada.");
 
@@ -61,7 +72,7 @@ namespace api.gestaopessoal.Controllers
         [HttpPut("Fechada/{id}/{fechada}")]
         public ActionResult PutFechada(string id, bool fechada)
         {            
-            var faturaEncontrada = _faturaService.Get(id);
+            var faturaEncontrada = _faturaService.GetById(id);
             if (faturaEncontrada == null)
                 return NotFound($"Fatura com Id = {id} não encontrada.");
 
@@ -74,7 +85,7 @@ namespace api.gestaopessoal.Controllers
         [HttpPut("Atual/{id}/{atual}")]
         public ActionResult PutAtual(string id, bool atual)
         {
-            var faturaEncontrada = _faturaService.Get(id);
+            var faturaEncontrada = _faturaService.GetById(id);
             if (faturaEncontrada == null)
                 return NotFound($"Fatura com Id = {id} não encontrada.");
 
@@ -88,12 +99,19 @@ namespace api.gestaopessoal.Controllers
         [HttpDelete("{id}")]
         public ActionResult Delete(string id)
         {
-            var fatura = _faturaService.Get(id);
+            var fatura = _faturaService.GetById(id);
             if (fatura == null)
                 return NotFound($"Fatura com Id = {id} não encontrada.");
 
             _faturaService.Remove(id);
             return Ok($"Fatura com Id = {id} removida.");
+        }
+
+        [HttpPut("teste")]
+        public ActionResult UpdateAll()
+        {
+            _faturaService.UpdateAll();
+            return NoContent();
         }
     }
 }

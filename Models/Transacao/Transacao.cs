@@ -29,6 +29,9 @@ namespace api.gestaopessoal.Models.Transacao
         [BsonElement("observacao")]
         public string Observacao { get; set; } = string.Empty;
 
+        [BsonElement("categoriaId")]
+        public string CategoriaId { get; set; } = string.Empty;
+
         [BsonElement("faturaid")]
         public string FaturaId { get; set; } = string.Empty;
 
@@ -38,14 +41,17 @@ namespace api.gestaopessoal.Models.Transacao
         [BsonElement("usuarioid")]
         public string UsuarioId { get; set; } = string.Empty;
 
+        [BsonElement("Editando")]
+        public bool Editando { get; set; } = false;
+
         [BsonElement("estaselecionado")]
         public bool EstaSelecionado { get; set; } = false;
-
+        [BsonIgnore]
+        public Categoria.Categoria? Categoria { get; set; }
         [BsonIgnore]
         public Fatura.Fatura? Fatura { get; set; }
         [BsonIgnore]
         public TipoPagamento.TipoPagamento? TipoPagamento { get; set; }           
-        public bool Editando { get; set; }
         public int RegistroId { get; set; }
     }
 }

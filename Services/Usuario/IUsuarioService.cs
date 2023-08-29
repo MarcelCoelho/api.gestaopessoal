@@ -10,6 +10,8 @@
         Usuario Create(Usuario usuario);
         void Update(string id, Usuario usuario);
         void Remove(string id);
-        bool ValidarLogin(string login, string senha);
+        Usuario? Login(string login, string senha);
+        Usuario GetByLoginEmail(string valor);
+        
     }
 }

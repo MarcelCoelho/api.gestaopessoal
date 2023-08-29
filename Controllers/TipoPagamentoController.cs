@@ -29,7 +29,7 @@ namespace api.gestaopessoal.Controllers
         [HttpGet("{id}")]
         public ActionResult<TipoPagamento> Get(string id)
         {
-            var tipoPagamento  = _tipoPagamentoService.Get(id);
+            var tipoPagamento  = _tipoPagamentoService.GetById(id);
 
             if (tipoPagamento == null)            
                 return NotFound($"Tipo Pagamento com Id = {id} não encontrado.");
@@ -49,7 +49,7 @@ namespace api.gestaopessoal.Controllers
         [HttpPut("{id}")]
         public ActionResult Put(string id, [FromBody] TipoPagamento tipoPagamento)
         {
-            var tipoPagamentoEncontrado = _tipoPagamentoService.Get(id);
+            var tipoPagamentoEncontrado = _tipoPagamentoService.GetById(id);
             if (tipoPagamentoEncontrado == null)
                 return NotFound($"Tipo Pagamento com Id = {id} não encontrado.");
 
@@ -61,7 +61,7 @@ namespace api.gestaopessoal.Controllers
         [HttpDelete("{id}")]
         public ActionResult Delete(string id)
         {
-            var tipoPagamento = _tipoPagamentoService.Get(id);
+            var tipoPagamento = _tipoPagamentoService.GetById(id);
             if (tipoPagamento == null)
                 return NotFound($"Tipo Pagamento com Id = {id} não encontrado.");
 
